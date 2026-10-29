@@ -17,7 +17,6 @@ def choisir_taux(duree):
     else:
         return taux_longue
 
-
 def calcul_mensualite(capital, taux, duree):
     n = duree * 12          # nombre de mois
     i = taux / 100 / 12     # taux par mois
@@ -46,8 +45,9 @@ st.sidebar.header("Reglages des taux de la banque")
 taux_courte = st.sidebar.number_input("Taux pour 5 a 10 ans (%)", value=taux_courte, step=0.1)
 taux_moyenne = st.sidebar.number_input("Taux pour 11 a 15 ans (%)", value=taux_moyenne, step=0.1)
 taux_longue = st.sidebar.number_input("Taux pour 16 a 25 ans (%)", value=taux_longue, step=0.1)
+taux_assurance = st.sidebar.number_input("Taux d'assurance (% du capital par an)", value=0.00, step=0.05)
 
-# saisie de l'utilsatuer
+# saisie de l'utilsateur
 
 salaire = st.number_input("Salaire mensuel (euros)")
 duree = st.slider("Duree du pret (annees)", 5, 25)
@@ -67,6 +67,8 @@ capital = st.number_input("Montant du credit (euros)")
 mensualite = calcul_mensualite(capital, taux, duree)
 interet_total = mensualite * duree * 12 - capital
 cout_total = mensualite * duree * 12
+assurance_mensuelle = capital * taux_assurance / 100 / 12
+cout_assurance = assurance_mensuelle * duree * 12
 
 # affichage des resultats
 
@@ -82,7 +84,8 @@ else:
 st.write("Taux :", taux, "%")
 st.write("Mensualité :", round(mensualite, 2), "euros")
 st.write("Coût total du crédit (intérêts) :", round(interet_total, 2), "euros")
-
-
-
+st.write("Assurance :", round(assurance_mensuelle, 2), "euros par mois")
+st.write("Coût total de l'assurance :", round(cout_assurance, 2), "euros")
+st.write("Coût total du crédit avec assurance (intérêts + assurance) :", round(interet_total + cout_assurance, 2), "euros")
+st.write("Montant total à rembourser (capital + intérêts + assurance) :", round(cout_total + cout_assurance, 2), "euros")
 
