@@ -1,4 +1,5 @@
 import streamlit as st
+import pandas as pd
 
 # taux du credit selon la duree (en %)
 
@@ -36,6 +37,17 @@ def credit_max(salaire,taux,duree):
         capital_max = mensualite_max * (1 - (1 + i) ** (-n)) / i
     return capital_max
 
+def interets_par_mois(capital, taux, duree):
+    # renvoie la liste des interets payes chaque mois
+    mensualite = calcul_mensualite(capital, taux, duree)
+    i = taux / 100 / 12    # taux par mois
+    restant = capital
+    liste_interets = []
+    for mois in range(duree * 12):
+        interet = restant * i   # interet du mois sur le capital restant
+        liste_interets.append(interet)
+        restant = restant - (mensualite - interet)  # capital restant apres paiement de la mensualite
+    return liste_interets    
 
 st.title("Simulateur de credit")
 
@@ -89,3 +101,15 @@ st.write("Coût total de l'assurance :", round(cout_assurance, 2), "euros")
 st.write("Coût total du crédit avec assurance (intérêts + assurance) :", round(interet_total + cout_assurance, 2), "euros")
 st.write("Montant total à rembourser (capital + intérêts + assurance) :", round(cout_total + cout_assurance, 2), "euros")
 
+# graphique des interets en fonction du temps
+
+liste_interets = interets_par_mois(capital, taux, duree)
+df = pd.DataFrame({"Mois": range(1, len(liste_interets) + 1),
+                   "Interets du mois (euros)": liste_interets})
+df["Interets cumulés (euros)"] = df["Interets du mois (euros)"].cumsum()
+
+st.subheader("Graphique des intérêts au cours du temps")
+st.write("Interêts payés chaque mois :")
+st.line_chart(df, x="Mois", y="Interets du mois (euros)")
+st.write("Interêts cumulés au cours du temps :")
+st.line_chart(df, x="Mois", y="Interets cumulés (euros)")
