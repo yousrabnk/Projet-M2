@@ -1,0 +1,13 @@
+name: streamlit
+channels:
+  - defaults
+  - https://repo.anaconda.com/pkgs/main
+  - https://repo.anaconda.com/pkgs/r
+  - https://repo.anaconda.com/pkgs/msys2
+dependencies:
+  - pandas
+  - pydeck
+  - scikit-learn
+  - seaborn
+  - streamlit
+prefix: C:\Users\youbn\anaconda3\envs\streamlit

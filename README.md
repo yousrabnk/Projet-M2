@@ -1,28 +1,41 @@
+# Simulateur de crédit
 
-# Simulateur de credit
+Application Streamlit qui indique combien on peut emprunter selon son salaire et la durée du prêt, puis qui détaille le coût du crédit : mensualité, intérêts, assurance et graphiques.
 
-Application streamlit : on rentre son salaire et le montant du credit demande, on choisit la duree avec un slider (5 a 25 ans) et le but est que l'appli affiche le montant maximal empruntable, la mensualite, le cout total du credit, le cout de l'assurance, la somme des interets et dise si le pret est possible (mensualite < 30% du salaire).
+## Fonctionnalités
+- montant maximal empruntable, avec une mensualité limitée à 30% du salaire
+- message d'erreur si le prêt est impossible (mensualité supérieure à 30% du salaire)
+- mensualité, coût total du crédit (somme des intérêts), assurance et montant total à rembourser
+- graphiques des intérêts au cours du temps (par mois et cumulés)
+- taux de la banque et taux d'assurance réglables dans la sidebar
 
-## Lancer
-    streamlit run projet.py
+## Installation
 
-## Ce qui est fait
-- calcul de la mensualite et du cout total du credit (somme des interets)
-- taux different selon la duree (courte / moyenne / longue) modifiables dans la sidebar
-- montant maximal empruntable affiche des que le salaire et la duree sont saisis
-- message si le pret est impossible lorsque la mensualite depasse 30% du salaire
-- saisie du salaire, du montant et de la duree 
-- gestion d'un credit sans interet (taux = 0)
-- assurance du credit : taux modifiable dans la sidebar 
-- affichage du cout total du credit avec assurance (interets + assurance)
-- affichage du montant total a rembourser (capital + interets + assurance)
+conda env create -f environment.yaml
 
-## Ce qui reste a faire
-- graphique des interets
+conda activate streamlit
 
-## Problemes 
-- je n'ai pas de vrais taux de banque, j'ai mis des valeurs qui augmentent avec la duree
-- le taux d'assurance depend de la banque et du profil de l'emprunteur (age, sante...), donc je n'ai pas mis de valeur par defaut : il est a 0 au lancement et l'utilisateur le modifie dans les reglages de la banque
+Paquets Python nécessaires : streamlit et pandas.
 
-## Questions
-- est ce qu'il faut mettre des valeur par défaut au lancement de l'application pour le salaire, le taux d'assurance etc ?
+## Lancement
+
+streamlit run projet.py
+
+## Utilisation
+1. Saisir le salaire mensuel et choisir la durée du prêt (5 à 25 ans) : le montant maximal empruntable s'affiche par la suite.
+2. Saisir le montant du crédit : l'application indique si le prêt est possible ou non.
+3. Consulter le détail des coûts et les graphiques pour mieux visualiser.
+4. Modifier si besoin les taux de la banque dans la sidebar.
+
+Les taux par défaut sont les suivants : 3,0 % (5 à 10 ans), 3,2 % (11 à 15 ans) et 3,5 % (16 à 25 ans). Le taux d'assurance est à 0 au lancement de l'application.
+
+## Fonctionnement du code
+Le code se trouve dans 'projet.py' :
+- 'choisir_taux' : choisit le taux selon la durée (courte, moyenne, longue)
+- 'calcul_mensualite' : calcule la mensualité
+- 'credit_max' : retrouve le capital maximal à partir de la condition 30% du salaire 
+- 'interets_par_mois' : calcule les intérêts de chaque mois pour les graphiques
+
+## Limites 
+- les taux par défaut sont des valeurs indicatives, pas de vrais taux de banque
+- l'assurance n'est pas comptée dans les 30%

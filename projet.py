@@ -49,20 +49,20 @@ def interets_par_mois(capital, taux, duree):
         restant = restant - (mensualite - interet)  # capital restant apres paiement de la mensualite
     return liste_interets    
 
-st.title("Simulateur de credit")
+st.title("Simulateur de crédit")
 
 # reglages dans la sidebar pour les taux
 
-st.sidebar.header("Reglages des taux de la banque")
-taux_courte = st.sidebar.number_input("Taux pour 5 a 10 ans (%)", value=taux_courte, step=0.1)
-taux_moyenne = st.sidebar.number_input("Taux pour 11 a 15 ans (%)", value=taux_moyenne, step=0.1)
-taux_longue = st.sidebar.number_input("Taux pour 16 a 25 ans (%)", value=taux_longue, step=0.1)
-taux_assurance = st.sidebar.number_input("Taux d'assurance (% du capital par an)", value=0.00, step=0.05)
+st.sidebar.header("Réglages des taux de la banque")
+taux_courte = st.sidebar.number_input("Taux pour 5 à 10 ans (%)", value=taux_courte, min_value=0.0, step=0.1)
+taux_moyenne = st.sidebar.number_input("Taux pour 11 à 15 ans (%)", value=taux_moyenne, min_value=0.0, step=0.1)
+taux_longue = st.sidebar.number_input("Taux pour 16 à 25 ans (%)", value=taux_longue, min_value=0.0, step=0.1)
+taux_assurance = st.sidebar.number_input("Taux d'assurance (% du capital par an)", value=0.00, min_value=0.0, step=0.1)
 
 # saisie de l'utilsateur
 
-salaire = st.number_input("Salaire mensuel (euros)")
-duree = st.slider("Duree du pret (annees)", 5, 25)
+salaire = st.number_input("Salaire mensuel (euros)", min_value=0.0)
+duree = st.slider("Durée du prêt (années)", 5, 25)
 
 # affichage du montant maximal empruntable selon le salaire
 
@@ -72,7 +72,7 @@ st.info("Montant maximal empruntable selon votre salaire pour cette durée est d
 
 # saisie du montant du credit
 
-capital = st.number_input("Montant du credit (euros)")
+capital = st.number_input("Montant du crédit (euros)", min_value=0.0)
 
 # calculs
 
@@ -84,7 +84,7 @@ cout_assurance = assurance_mensuelle * duree * 12
 
 # affichage des resultats
 
-st.subheader("Resultats pour un credit de " + str(capital) + " euros sur " + str(duree) + " ans :")
+st.subheader("Résultats pour un crédit de " + str(capital) + " euros sur " + str(duree) + " ans :")
 
 # pret impossible si la mensulaite depasse 30% du salaire
 
@@ -105,11 +105,11 @@ st.write("Montant total à rembourser (capital + intérêts + assurance) :", rou
 
 liste_interets = interets_par_mois(capital, taux, duree)
 df = pd.DataFrame({"Mois": range(1, len(liste_interets) + 1),
-                   "Interets du mois (euros)": liste_interets})
-df["Interets cumulés (euros)"] = df["Interets du mois (euros)"].cumsum()
+                   "Intérêts du mois (euros)": liste_interets})
+df["Intérêts cumulés (euros)"] = df["Intérêts du mois (euros)"].cumsum()
 
 st.subheader("Graphique des intérêts au cours du temps")
-st.write("Interêts payés chaque mois :")
-st.line_chart(df, x="Mois", y="Interets du mois (euros)")
-st.write("Interêts cumulés au cours du temps :")
-st.line_chart(df, x="Mois", y="Interets cumulés (euros)")
+st.write("Intérêts payés chaque mois :")
+st.line_chart(df, x="Mois", y="Intérêts du mois (euros)")
+st.write("Intérêts cumulés au cours du temps :")
+st.line_chart(df, x="Mois", y="Intérêts cumulés (euros)")
