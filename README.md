@@ -11,15 +11,15 @@ Application Streamlit qui indique combien on peut emprunter selon son salaire et
 
 ## Installation
 
-conda env create -f environment.yaml
+```conda env create -f environment.yaml
 
-conda activate streamlit
+conda activate streamlit```
 
 Paquets Python nécessaires : streamlit et pandas.
 
 ## Lancement
 
-streamlit run projet.py
+```streamlit run projet.py```
 
 ## Utilisation
 1. Saisir le salaire mensuel et choisir la durée du prêt (5 à 25 ans) : le montant maximal empruntable s'affiche par la suite.
@@ -31,10 +31,10 @@ Les taux par défaut sont les suivants : 3,0 % (5 à 10 ans), 3,2 % (11 à 15 an
 
 ## Fonctionnement du code
 Le code se trouve dans 'projet.py' :
-- 'choisir_taux' : choisit le taux selon la durée (courte, moyenne, longue)
-- 'calcul_mensualite' : calcule la mensualité
-- 'credit_max' : retrouve le capital maximal à partir de la condition 30% du salaire 
-- 'interets_par_mois' : calcule les intérêts de chaque mois pour les graphiques
+- `choisir_taux` : choisit le taux selon la durée (courte, moyenne, longue)
+- `calcul_mensualite` : calcule la mensualité
+- `credit_max` : retrouve le capital maximal à partir de la condition 30% du salaire 
+- `interets_par_mois` : calcule les intérêts de chaque mois pour les graphiques
 
 ## Limites 
 - les taux par défaut sont des valeurs indicatives, pas de vrais taux de banque
